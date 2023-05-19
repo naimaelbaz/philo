@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:50:51 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/05/18 18:05:55 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/05/19 16:01:01 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,30 @@ int	is_died(t_philo *phil)
 		a = (get_time() - phil->time->first_time) - phil->last_time_eat;
 		if (a >= phil->time->t_die && phil->num_e != phil->time->num_eat)
 		{
-			ft_print(NULL, phil, 1);
+			ft_print("", phil, 1);
 			break ;
 		}
 		if (check_num_eat(phil))
+		{
+			ft_print("", phil, 2);
 			break ;
+		}
 		phil = phil->next;
 	}
 	return (0);
 }
 
-void	ft_print(char *str, t_philo *phil, int is_deid)
+void	ft_print(char *str, t_philo *phil, int f)
 {
 	static int	n;
 
 	pthread_mutex_lock(&phil->time->print);
-	if (is_deid)
+	if (f)
 	{
-		printf("\e[0;31m%ldms\t\t%d\tis died\e[0;0m\n",
-			(get_time() - phil->time->first_time), phil->philo_id);
 		n = 1;
+		if (f == 1)
+			printf("\e[0;31m%ldms\t\t%d\tis dead\e[0;0m\n",
+				(get_time() - phil->time->first_time), phil->philo_id);
 	}
 	if (!n)
 	{
@@ -63,17 +67,17 @@ void	*ft_routine(void *arg)
 		ft_print("has taken a fork", phil, 0);
 		pthread_mutex_lock(&phil->next->fork);
 		ft_print("has taken a fork", phil, 0);
-		ft_print("is eating", phil, 0);
 		phil->last_time_eat = get_time() - phil->time->first_time;
+		ft_print("is eating", phil, 0);
 		ft_usleep(get_time(), phil->time->t_eat);
 		pthread_mutex_unlock(&phil->fork);
 		pthread_mutex_unlock(&phil->next->fork);
 		ft_print("is sleeping", phil, 0);
 		ft_usleep(get_time(), phil->time->t_sleep);
 		ft_print("is thinking", phil, 0);
+		phil->num_e++;
 		if (phil->time->num_eat != -1 && phil->num_e == phil->time->num_eat)
 			break ;
-		phil->num_e++;
 	}
 	return (NULL);
 }
