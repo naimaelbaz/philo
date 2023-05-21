@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 11:14:41 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/05/15 11:36:14 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/05/21 20:48:37 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ int	ft_atoi(char *str)
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '\0')
-		return (printf("\e[0;31minvalid value 😵\n"), -1);
+		return (printf("\e[0;31minvalid value😵\n"), -1);
+	if (str[i] == '+' && (str[i] >= '0' && str[i] <= '9'))
+		i++;
 	while (str[i])
 	{
-		if (str[i] >= '0' && str[i] <= '9')
+		if (str[i] < '0' || str[i] > '9')
+			return (printf("\e[0;31minvalid value😵\n"), -1);
+		else if (str[i] >= '0' && str[i] <= '9')
 			res = res * 10 + (str[i] - 48);
-		else if (str[i] < '0' || str[i] > '9')
-			return (printf("\e[0;31minvalid value 😵\n"), -1);
 		i++;
 	}
 	if ((res > 2147483647))

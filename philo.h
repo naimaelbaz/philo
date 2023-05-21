@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:51:10 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/05/19 15:39:30 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/05/21 20:34:06 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct data
 	int				t_sleep;
 	int				num_eat;
 	long			first_time;
-	pthread_mutex_t	print;
+	pthread_mutex_t	*print;
 }	t_data;
 
 typedef struct philo
@@ -38,13 +38,21 @@ typedef struct philo
 	long			last_time_eat;
 	t_data			*time;
 	pthread_mutex_t	fork;
+	pthread_mutex_t	time_m;
+	pthread_mutex_t	n_eat;
+	pthread_mutex_t	*print;
 	struct philo	*next;
 }	t_philo;
+
 int		check_num_eat(t_philo *philo);
 int		ft_atoi(char *str);
 t_philo	*ft_remplir(t_philo *philo, t_data *t);
 int		ft_add_args(t_data *data, char **av);
 long	get_time(void);
-void	ft_usleep(long  current_time, int time_to_sleep);
+void	ft_usleep(long current_time, int time_to_sleep);
 void	ft_print(char *str, t_philo *phil, int is_deid);
+int		is_died(t_philo *phil);
+int		ft_continue(t_philo *phil);
+void	ft_print(char *str, t_philo *phil, int f);
+
 #endif
