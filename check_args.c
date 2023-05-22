@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 16:06:35 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/05/21 18:57:07 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/05/22 13:46:41 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	check_num_eat(t_philo *philo)
 	int	i;
 
 	i = 0;
-
 	while (i < philo->time->num_philo)
 	{
 		pthread_mutex_lock(&philo->n_eat);

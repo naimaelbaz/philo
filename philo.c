@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:50:51 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/05/21 20:36:56 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/05/22 14:24:45 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,14 @@ void	*ft_routine(void *arg)
 	{
 		if (phil->philo_id % 2 == 0)
 			usleep(100);
-		pthread_mutex_lock(&phil->fork);
-		ft_print("has taken a fork", phil, 0);
-		pthread_mutex_lock(&phil->next->fork);
-		ft_print("has taken a fork", phil, 0);
-		ft_print("is eating", phil, 0);
-		pthread_mutex_lock(&phil->time_m);
-		phil->last_time_eat = get_time() - phil->time->first_time;
-		pthread_mutex_unlock(&phil->time_m);
-		ft_usleep(get_time(), phil->time->t_eat);
-		pthread_mutex_unlock(&phil->fork);
-		pthread_mutex_unlock(&phil->next->fork);
-		if (!ft_continue(phil))
+		pthread_mutex_lock(&phil->n_eat);
+		if (phil->time->num_eat != -1 && phil->num_e == phil->time->num_eat)
+		{
+			pthread_mutex_unlock(&phil->n_eat);
 			break ;
+		}
+		ft_eat(phil);
+		ft_sleep_think(phil);
 	}
 	return (NULL);
 }
@@ -73,6 +68,7 @@ int	main(int ac, char **av)
 			return (0);
 		if (!is_died(phil))
 			return (0);
+		free (data.print);
 	}
 	else
 		return (printf("\e[0;31minvalid number of args😵\e[0;0m\n"), 0);

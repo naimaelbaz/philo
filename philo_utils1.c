@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 19:20:23 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/05/21 20:33:29 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/05/22 14:14:10 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,28 @@ void	ft_print(char *str, t_philo *phil, int f)
 	pthread_mutex_unlock(phil->print);
 }
 
-int	ft_continue(t_philo *phil)
+void	ft_sleep_think(t_philo *phil)
 {
 	ft_print("is sleeping", phil, 0);
 	ft_usleep(get_time(), phil->time->t_sleep);
 	ft_print("is thinking", phil, 0);
 	pthread_mutex_lock(&phil->n_eat);
 	phil->num_e++;
-	if (phil->time->num_eat != -1 && phil->num_e == phil->time->num_eat)
-	{
-		pthread_mutex_unlock(&phil->n_eat);
-		return (0);
-	}
 	pthread_mutex_unlock(&phil->n_eat);
-	return (1);
+}
+
+void	ft_eat(t_philo *phil)
+{
+	pthread_mutex_unlock(&phil->n_eat);
+	pthread_mutex_lock(&phil->fork);
+	ft_print("has taken a fork", phil, 0);
+	pthread_mutex_lock(&phil->next->fork);
+	ft_print("has taken a fork", phil, 0);
+	ft_print("is eating", phil, 0);
+	pthread_mutex_lock(&phil->time_m);
+	phil->last_time_eat = get_time() - phil->time->first_time;
+	pthread_mutex_unlock(&phil->time_m);
+	ft_usleep(get_time(), phil->time->t_eat);
+	pthread_mutex_unlock(&phil->fork);
+	pthread_mutex_unlock(&phil->next->fork);
 }
