@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 16:06:35 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/05/22 13:46:41 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/05/25 19:19:50 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_add_args(t_data *data, char **av)
 	if (av[5] != NULL)
 	{
 		data->num_eat = ft_atoi(av[5]);
-		if (data->num_eat == -1)
+		if (data->num_eat == -1 || data->num_eat == 0)
 			return (-1);
 	}
 	else
