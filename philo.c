@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:50:51 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/05/25 19:14:48 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/05/25 21:08:25 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	*ft_routine(void *arg)
 			pthread_mutex_unlock(&phil->n_eat);
 			break ;
 		}
+		pthread_mutex_unlock(&phil->n_eat);
 	}
 	return (NULL);
 }
@@ -43,7 +44,8 @@ int	create_threads(t_philo *phil)
 		if (pthread_create(&phil->thread_id,
 				NULL, ft_routine, phil) != 0)
 			return (0);
-		pthread_detach(phil->thread_id);
+		if (pthread_detach(phil->thread_id) != 0)
+			return (0);
 		phil = phil->next;
 		i++;
 	}

@@ -6,7 +6,7 @@
 #    By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/16 10:33:44 by nel-baz           #+#    #+#              #
-#    Updated: 2023/05/25 15:18:01 by nel-baz          ###   ########.fr        #
+#    Updated: 2023/05/25 20:56:26 by nel-baz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philo
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=thread
 
 SRCS = check_args.c ft_remplir.c philo.c philo_utils.c philo_utils1.c\
 

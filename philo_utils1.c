@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 19:20:23 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/05/25 19:12:04 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/05/25 21:06:05 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_sleep_think(t_philo *phil)
 
 void	ft_eat(t_philo *phil)
 {
-	pthread_mutex_unlock(&phil->n_eat);
 	pthread_mutex_lock(&phil->fork);
 	ft_print("has taken a fork", phil, 0);
 	pthread_mutex_lock(&phil->next->fork);
