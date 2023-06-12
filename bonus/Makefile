@@ -6,33 +6,40 @@
 #    By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/16 10:33:44 by nel-baz           #+#    #+#              #
-#    Updated: 2023/05/25 20:56:26 by nel-baz          ###   ########.fr        #
+#    Updated: 2023/06/12 11:29:23 by nel-baz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
+NAME_B = philo_bonus
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=thread
+FLAGS = -Wall -Werror -Wextra
 
-SRCS = check_args.c ft_remplir.c philo.c philo_utils.c philo_utils1.c\
+SRCS_BONUS =	check_args_bonus.c \
+				ft_strjoin_bonus.c \
+				philo_utils2_bonus.c \
+				ft_remplir_bonus.c \
+				philo_bonus.c \
+				philo_utils1_bonus.c \
+				philo_utils_bonus.c
 
-OBJS = $(SRCS:.c=.o)
+OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+	
+%.o: %.c philo_bonus.h
+	$(CC) $(FLAGS) -c $< -o $@
 
-%.o: %.c philo.h
-	$(CC) $(CFLAGS) -c $< -o $@
+all : $(NAME_B)
 
-all :  $(NAME)	
 
-$(NAME):  $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+$(NAME_B):  $(OBJS_BONUS)
+	$(CC) $(FLAGS) $(OBJS_BONUS) -o $(NAME_B)
 
 clean:	
-	rm -rf $(OBJS)
+	rm -rf $(OBJS_BONUS)
 
 fclean:	clean
-	rm -rf $(NAME)
+	rm -rf $(NAME_B)
 
 re : fclean all
 

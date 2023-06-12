@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 19:20:23 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/05/25 21:06:05 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/12 10:47:17 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@ void	ft_print(char *str, t_philo *phil, int f)
 
 	pthread_mutex_lock(phil->print);
 	if (f)
-	{
 		n = 1;
-		if (f == 1)
-			printf("\e[0;31m%ldms\t\t%d\tis dead\e[0;0m\n",
-				(get_time() - phil->time->first_time), phil->philo_id);
-	}
 	if (!n)
 		printf("%ldms\t\t%d\t%s\n",
 			(get_time() - phil->time->first_time), phil->philo_id, str);
@@ -35,9 +30,6 @@ void	ft_sleep_think(t_philo *phil)
 	ft_print("is sleeping", phil, 0);
 	ft_usleep(get_time(), phil->time->t_sleep);
 	ft_print("is thinking", phil, 0);
-	pthread_mutex_lock(&phil->n_eat);
-	phil->num_e++;
-	pthread_mutex_unlock(&phil->n_eat);
 }
 
 void	ft_eat(t_philo *phil)

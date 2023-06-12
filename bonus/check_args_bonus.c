@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   check_args_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 16:06:35 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/05/25 19:19:50 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/12 11:22:30 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 int	ft_add_args(t_data *data, char **av)
 {
 	data->num_philo = ft_atoi(av[1]);
+	if (data->num_philo <= 0)
+		return (-1);
 	data->t_die = ft_atoi(av[2]);
+	if (data->t_die == -1)
+		return (-1);
 	data->t_eat = ft_atoi(av[3]);
+	if (data->t_eat == -1)
+		return (-1);
 	data->t_sleep = ft_atoi(av[4]);
-	if (data->num_philo <= 0 || data->t_die == -1
-		|| data->t_eat == -1 || data->t_sleep == -1)
+	if (data->t_sleep == -1)
 		return (-1);
 	if (av[5] != NULL)
 	{
@@ -32,47 +37,42 @@ int	ft_add_args(t_data *data, char **av)
 	return (0);
 }
 
-int	check_num_eat(t_philo *philo)
+void	*ft_check_num_eat(void *arg)
 {
-	int	i;
+	t_philo	*phil;
+	int		i;
 
 	i = 0;
-	while (i < philo->time->num_philo)
+	phil = (t_philo *)arg;
+	while (i < phil->time->num_philo)
 	{
-		pthread_mutex_lock(&philo->n_eat);
-		if (philo->num_e != philo->time->num_eat)
-		{
-			pthread_mutex_unlock(&philo->n_eat);
-			break ;
-		}
+		sem_wait(phil->time->wait_done);
+		sem_post(phil->time->wait_done);
 		i++;
-		pthread_mutex_unlock(&philo->n_eat);
 	}
-	if (i == philo->time->num_philo)
-		return (1);
-	return (0);
+	sem_wait(phil->time->print);
+	exit(0);
 }
 
-int	is_died(t_philo *phil)
+void	*is_died(void *arg)
 {
 	long	a;
+	t_philo	*phil;
 
+	phil = (t_philo *) arg;
 	while (1)
 	{
-		pthread_mutex_lock(&phil->time_m);
+		sem_wait(phil->time_m);
 		a = (get_time() - phil->time->first_time) - phil->last_time_eat;
-		pthread_mutex_unlock(&phil->time_m);
-		if (a >= phil->time->t_die && phil->num_e != phil->time->num_eat)
+		sem_post(phil->time_m);
+		if (a >= phil->time->t_die)
 		{
-			ft_print("", phil, 1);
-			break ;
+			sem_wait(phil->time->print);
+			printf("\e[0;31m%ldms\t\t%d\tis dead\e[0;0m\n",
+				(get_time() - phil->time->first_time), phil->philo_id);
+			sem_post(phil->time->wait_dead);
+			exit(0);
 		}
-		if (check_num_eat(phil))
-		{
-			ft_print("", phil, 2);
-			break ;
-		}
-		phil = phil->next;
 	}
-	return (0);
+	return (NULL);
 }
