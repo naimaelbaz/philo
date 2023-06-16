@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 19:20:23 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/12 11:16:30 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/16 16:00:35 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_print(char *str, t_philo *phil)
 
 void	ft_sleep_think(t_philo *phil)
 {
-	ft_print("is sleeping", phil);
+	ft_print("is sleeping", phil);	
 	ft_usleep(get_time(), phil->time->t_sleep);
 	ft_print("is thinking", phil);
 }
@@ -34,6 +34,9 @@ void	ft_eat(t_philo *phil)
 	sem_wait(phil->time->fork);
 	ft_print("has taken a fork", phil);
 	ft_print("is eating", phil);
+	phil->num_e++;
+	if (phil->time->num_eat > 0 && phil->num_e == (phil->time->num_eat))
+		sem_post(phil->time->wait_done);
 	sem_wait(phil->time_m);
 	phil->last_time_eat = get_time() - phil->time->first_time;
 	sem_post(phil->time_m);

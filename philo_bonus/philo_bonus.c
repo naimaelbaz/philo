@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:50:51 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/12 11:14:06 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/16 15:49:07 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@ void	ft_routine(t_philo *phil)
 	{
 		ft_eat(phil);
 		ft_sleep_think(phil);
-		phil->num_e++;
-		if (phil->time->num_eat > 0 && phil->num_e == (phil->time->num_eat + 1))
-		{
-			sem_post(phil->time->wait_done);
-			exit(0);
-		}
 	}
 }
 
@@ -39,10 +33,7 @@ void	create_process(t_philo *phil)
 	{
 		phil->pid = fork();
 		if (phil->pid == 0)
-		{
 			ft_routine(phil);
-			exit (0);
-		}
 		phil = phil->next;
 		i++;
 	}
@@ -62,9 +53,9 @@ int	main(int ac, char **av)
 		phil = ft_remplir(phil, &data);
 		open_my_sems(phil);
 		create_process(phil);
-		waitpid(-1, 0, 0);
 		if (data.num_eat)
 			pthread_create(&id, NULL, ft_check_num_eat, phil);
+		waitpid(-1, 0, 0);
 		kill_proce(phil);
 		sem_close(phil->time->fork);
 	}

@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 16:06:35 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/12 11:22:30 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/16 15:46:20 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	*ft_check_num_eat(void *arg)
 	while (i < phil->time->num_philo)
 	{
 		sem_wait(phil->time->wait_done);
-		sem_post(phil->time->wait_done);
 		i++;
 	}
 	sem_wait(phil->time->print);
