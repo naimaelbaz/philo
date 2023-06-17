@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 19:20:23 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/16 16:00:35 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/16 17:03:47 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_print(char *str, t_philo *phil)
 
 void	ft_sleep_think(t_philo *phil)
 {
-	ft_print("is sleeping", phil);	
+	ft_print("is sleeping", phil);
 	ft_usleep(get_time(), phil->time->t_sleep);
 	ft_print("is thinking", phil);
 }
