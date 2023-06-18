@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 16:06:35 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/17 17:26:35 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/18 21:44:55 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	*ft_check_num_eat(void *arg)
 		sem_wait(phil->time->wait_done);
 		i++;
 	}
-	sem_post(phil->time->wait_dead);
 	sem_wait(phil->time->print);
+	kill_proce(phil);
 	exit(0);
 }
 
@@ -63,7 +63,7 @@ void	*is_died(void *arg)
 	while (1)
 	{
 		sem_wait(phil->time_m);
-		a = (get_time() - phil->time->first_time) - phil->last_time_eat;
+		a = (get_time()) - phil->last_time_eat;
 		sem_post(phil->time_m);
 		if (a >= phil->time->t_die)
 		{
@@ -73,6 +73,7 @@ void	*is_died(void *arg)
 			sem_post(phil->time->wait_dead);
 			exit(0);
 		}
+		usleep(200);
 	}
 	return (NULL);
 }

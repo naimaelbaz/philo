@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 16:00:19 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/11 14:44:36 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/18 12:53:58 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_philo	*ft_lstnew(t_data *t, int id)
 	node->philo_id = id;
 	node->next = NULL;
 	node->num_e = 0;
-	node->last_time_eat = 0;
+	node->last_time_eat = get_time();
 	return (node);
 }
 

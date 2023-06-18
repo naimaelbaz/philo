@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 19:20:23 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/16 17:03:47 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/18 21:12:06 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_eat(t_philo *phil)
 	if (phil->time->num_eat > 0 && phil->num_e == (phil->time->num_eat))
 		sem_post(phil->time->wait_done);
 	sem_wait(phil->time_m);
-	phil->last_time_eat = get_time() - phil->time->first_time;
+	phil->last_time_eat = get_time();
 	sem_post(phil->time_m);
 	ft_usleep(get_time(), phil->time->t_eat);
 	sem_post(phil->time->fork);

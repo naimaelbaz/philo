@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 14:45:24 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/11 15:16:06 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/18 11:35:58 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_eat(t_philo *phil);
 char	*ft_strjoin(char *s1, char s2);
 int		ft_strlen(char *str);
 void	*ft_check_num_eat(void *arg);
-void	open_my_sems(t_philo *phil);
+int		open_my_sems(t_philo *phil);
 void	kill_proce(t_philo *phil);
 
 #endif
