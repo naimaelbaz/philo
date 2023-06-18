@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 16:06:35 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/12 10:47:35 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/18 11:24:55 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	is_died(t_philo *phil)
 		pthread_mutex_lock(&phil->time_m);
 		a = (get_time() - phil->time->first_time) - phil->last_time_eat;
 		pthread_mutex_unlock(&phil->time_m);
-		if (a >= phil->time->t_die)
+		if (a >= phil->time->t_die && phil->num_e != phil->time->num_eat)
 		{
 			pthread_mutex_lock(phil->print);
 			printf("\e[0;31m%ldms\t\t%d\tis dead\e[0;0m\n",
@@ -78,9 +78,11 @@ int	is_died(t_philo *phil)
 		if (phil->time->num_eat > 0 && check_num_eat(phil))
 		{
 			ft_print("", phil, 2);
-			break ;
+			destroy_mutex(phil);
+			free(phil->time->print);
+			free_list(&phil);
+			return (0);
 		}
-
 		phil = phil->next;
 	}
 	return (0);

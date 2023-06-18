@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:51:10 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/12 09:59:13 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/17 15:39:10 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,7 @@ int		is_died(t_philo *phil);
 void	ft_sleep_think(t_philo *phil);
 void	ft_print(char *str, t_philo *phil, int f);
 void	ft_eat(t_philo *phil);
+void	free_list(t_philo **phil);
+void	destroy_mutex(t_philo *phil);
 
 #endif
