@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:50:51 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/18 21:47:27 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/19 09:00:07 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,24 @@ int	create_process(t_philo *phil)
 	return (1);
 }
 
+int	check_eat(t_philo *phil)
+{
+	pthread_t	id;
+
+	if (phil->time->num_eat)
+	{
+		if (pthread_create(&id, NULL, ft_check_num_eat, phil) != 0)
+			return (0);
+		if (pthread_detach(id) != 0)
+			return (0);
+	}
+	return (1);
+}
+
 int	main(int ac, char **av)
 {
 	t_philo		*phil;
 	t_data		data;
-	pthread_t	id;
 
 	if (ac == 6 || ac == 5)
 	{
@@ -61,10 +74,10 @@ int	main(int ac, char **av)
 			return (0);
 		if (!create_process(phil))
 			return (0);
-		if (data.num_eat)
-			pthread_create(&id, NULL, ft_check_num_eat, phil);
+		check_eat(phil);
 		waitpid(-1, 0, 0);
-		kill_proce(phil);
+		sem_wait(phil->time->wait_dead);
+		return (kill_proce(phil), 0);
 	}
 	else
 		return (printf("\e[0;31minvalid number of args😵\e[0;0m\n"), 0);

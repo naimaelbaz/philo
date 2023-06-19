@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 11:14:41 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/12 09:59:34 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/18 21:52:25 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	ft_atoi(char *str)
 
 	res = 0;
 	i = ft_helper(str);
+	if (i == -1)
+		return (-1);
 	j = ft_strlen(str) - 1;
 	while (str && (str[j] == 32 || (str[j] >= 9 && str[j] <= 13)))
 		j--;
@@ -56,7 +58,7 @@ int	ft_atoi(char *str)
 		i++;
 	}
 	if ((res > 2147483647))
-		return (printf("\e[0;31minvalid value 😵\e[0;0m\n"), -1);
+		return (printf("\e[0;31m>>>>>invalid value 😵\e[0;0m\n"), -1);
 	return (res);
 }
 

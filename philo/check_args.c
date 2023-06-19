@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 16:06:35 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/18 11:24:55 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/19 09:02:36 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,13 @@ int	check_num_eat(t_philo *philo)
 	return (0);
 }
 
+void	free_done(t_philo *phil)
+{
+	destroy_mutex(phil);
+	free(phil->time->print);
+	free_list(&phil);
+}
+
 int	is_died(t_philo *phil)
 {
 	long	a;
@@ -68,20 +75,20 @@ int	is_died(t_philo *phil)
 		pthread_mutex_lock(&phil->time_m);
 		a = (get_time() - phil->time->first_time) - phil->last_time_eat;
 		pthread_mutex_unlock(&phil->time_m);
+		pthread_mutex_lock(&phil->n_eat);
 		if (a >= phil->time->t_die && phil->num_e != phil->time->num_eat)
 		{
+			pthread_mutex_unlock(&phil->n_eat);
 			pthread_mutex_lock(phil->print);
 			printf("\e[0;31m%ldms\t\t%d\tis dead\e[0;0m\n",
 				(get_time() - phil->time->first_time), phil->philo_id);
 			break ;
 		}
+		pthread_mutex_unlock(&phil->n_eat);
 		if (phil->time->num_eat > 0 && check_num_eat(phil))
 		{
 			ft_print("", phil, 2);
-			destroy_mutex(phil);
-			free(phil->time->print);
-			free_list(&phil);
-			return (0);
+			return (free_done(phil), 0);
 		}
 		phil = phil->next;
 	}

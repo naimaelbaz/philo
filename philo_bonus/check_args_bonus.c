@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 16:06:35 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/18 21:44:55 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/19 08:48:36 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	*ft_check_num_eat(void *arg)
 		i++;
 	}
 	sem_wait(phil->time->print);
-	kill_proce(phil);
 	exit(0);
 }
 

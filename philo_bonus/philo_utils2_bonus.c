@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 14:26:43 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/18 21:11:10 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/19 08:53:38 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,4 @@ void	kill_proce(t_philo *phil)
 		phil = phil->next;
 		i++;
 	}
-	sem_post(phil->time->wait_done);
-	sem_close(phil->time->fork);
-	sem_close(phil->time->print);
-	sem_close(phil->time->wait_dead);
-	sem_close(phil->time->wait_done);
 }

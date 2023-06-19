@@ -6,7 +6,7 @@
 /*   By: nel-baz <nel-baz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:50:51 by nel-baz           #+#    #+#             */
-/*   Updated: 2023/06/18 11:17:36 by nel-baz          ###   ########.fr       */
+/*   Updated: 2023/06/19 08:10:47 by nel-baz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*ft_routine(void *arg)
 	phil = (t_philo *) arg;
 	while (1)
 	{
-		if ((phil->time->num_philo % 2) == 0)
+		if (phil->philo_id % 2 == 0)
 			usleep(100);
 		ft_eat(phil);
 		ft_sleep_think(phil);
